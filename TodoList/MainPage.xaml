@@ -1,13 +1,15 @@
 ﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TodoList"
              x:Class="TodoList.MainPage">
     <VerticalStackLayout Padding="10">
         <Grid RowDefinitions="Auto, Auto"
             ColumnDefinitions="*, Auto">
-            <Entry x:Name="TaskEntry" Placeholder="Enter a new task" Grid.Row="0" Margin="3"/>
-            <Button Text="Add Task" Clicked="OnAddTaskClicked" Grid.Column="1" Margin="3" />
+            <Entry  Text="{Binding NewTaskName}" Placeholder="Enter a new task" Grid.Row="0" Margin="3"/>
+            <Button Text="Add Task" Command="{Binding AddTaskCommand}" Grid.Column="1" Margin="3" />
         </Grid>
-        <CollectionView x:Name="TasksList">
+
+        <CollectionView ItemsSource="{Binding Tasks}" Margin="0,10,0,0">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid ColumnDefinitions="*,Auto" Padding="5">
@@ -17,7 +19,8 @@
                         </HorizontalStackLayout>
 
                         <Button Text="Delete"
-                                Clicked="OnDeleteTaskClicked"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainPage}}, Path=ViewModel.DeleteTaskCommand}"
+                                CommandParameter="{Binding .}"
                                 Grid.Column="1"
                                 BackgroundColor="Red"
                                 TextColor="White"
