@@ -43,7 +43,6 @@ public partial class MainPage : ContentPage
             AddTaskCommand = new Command(AddTask);
             DeleteTaskCommand = new Command<TaskItem>(DeleteTask);
         }
-
         private void AddTask()
         {
             if (!string.IsNullOrWhiteSpace(NewTaskName))
@@ -52,7 +51,6 @@ public partial class MainPage : ContentPage
                 NewTaskName = string.Empty;
             }
         }
-
         private void DeleteTask(TaskItem task)
         {
             if (Tasks.Contains(task))
