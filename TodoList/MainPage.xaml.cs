@@ -30,19 +30,21 @@ public partial class MainPage : ContentPage
             {
                 _newTaskName = value;
                 OnPropertyChanged();
+                AddTaskCommand.ChangeCanExecute();
             }
         }
 
         public ObservableCollection<TaskItem> Tasks { get; set; } = new ObservableCollection<TaskItem>();
 
-        public ICommand AddTaskCommand { get; }
+        public Command AddTaskCommand { get; }
         public ICommand DeleteTaskCommand { get; }
 
         public MainViewModel()
         {
-            AddTaskCommand = new Command(AddTask);
+            AddTaskCommand = new Command(AddTask, () => !string.IsNullOrWhiteSpace(NewTaskName));
             DeleteTaskCommand = new Command<TaskItem>(DeleteTask);
         }
+
         private void AddTask()
         {
             if (!string.IsNullOrWhiteSpace(NewTaskName))
